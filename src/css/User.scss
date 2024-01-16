@@ -1,0 +1,112 @@
+$bg: #1B1B1B;
+$bbg: #141414;
+$fg: #292929;
+$text: #C7C7C7;
+
+@import url('https://fonts.googleapis.com/css2?family=Titillium+Web&display=swap');
+
+#flex {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    margin-top: 40px;
+
+    #user-page {
+        width: 80%;
+        background-color: $bg;
+
+        #header {
+            background-color: $fg;
+            color: $text;
+            border-radius: 10px;
+
+            padding: 20px;
+
+            #avatar {
+                display: flex;
+                flex-direction: row;
+
+                #info {
+                    flex-direction: column;
+
+                    p {
+                        font-size: 2rem;
+                        font-weight: 800;
+                        font-family: "Titillium Web";
+
+                        padding-left: 10px;
+                        margin: 5px 0 0 0;
+
+                        &#desc {
+                            font-size: 1rem;
+                            font-weight: 400;
+                            font-family: "Titillium Web";
+
+                            margin-top: 0px;
+
+                        }
+                    }
+                }  
+
+                img {
+                    width: 100px;
+                    height: 100px;
+                    
+                    border-radius: 5px;
+                }
+            }
+        }   
+        
+        .recent {
+            #info {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+
+                background-color: $fg;
+                border-radius: 10px;
+                margin-top: 10px;
+                padding: 0 20px;
+            }   
+
+            #games {
+                #game {
+                    display: flex;
+                    flex-direction: row;
+
+                    background-color: $fg;
+                    border-radius: 10px;
+
+                    margin: 10px 0;
+                    padding: 10px;
+
+                    img {
+                        width: 250px;
+                        border-radius: 5px;
+                    }
+
+                    #info {
+                        display: flex;
+                        flex-direction: column;
+                        height: 50px;
+
+                        p {
+                            font-size: 1.5rem;
+                            font-weight: 800;
+                            font-family: "Titillium Web";
+
+                            margin: 0;
+
+                            &#time {
+                                font-size: 1rem;
+                                font-weight: 400;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
