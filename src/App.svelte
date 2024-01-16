@@ -11,7 +11,7 @@
 <Router>
   <nav>
     <Link to="/">
-      <img id="logo" src="gld-logo.png" alt="logo"/>
+      <img id="logo" src="/gld-logo.png" alt="logo"/>
     </Link>
   
     <div class="right">
@@ -29,7 +29,7 @@
   <div>
     <Route path="/" component={Home} />
     <Route path="/search" component={Search} />
-    <Route path="/user" let:params>
+    <Route path="/u/:user" let:params>
       <User user="{params.user}"/>
     </Route>
     <Route path="/settings" component={Settings}/>

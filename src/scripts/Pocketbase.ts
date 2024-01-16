@@ -12,6 +12,7 @@ export const register = async ({email, password, username}: {email: string, pass
         emailVisibility: true,
         password: password,
         passwordConfirm: password, // sla pra q isso
+        displayName: username,
     }
     
     await pb.collection("users").create(model)
@@ -25,6 +26,11 @@ export const register = async ({email, password, username}: {email: string, pass
 export const login = async ({email, password}: {email: string, password: string}) => {
     await pb.collection("users").authWithPassword(email, password)
     authStore.set(pb.authStore)
+
+    let agent = navigator.userAgent
+    if (agent.includes("ProjectGLD")) {
+        location.href = "/settings"
+    }
 }
 
 export const logout = async () => {
@@ -47,4 +53,10 @@ export const updateSettings = async (
     }
 
     await pb.collection("users").update(pb.authStore.model?.id!, data)
+}
+
+export const getUser = async (id: string) => {
+    let data = await pb.collection("users").getOne(id)
+
+    return data
 }

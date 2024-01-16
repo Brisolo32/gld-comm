@@ -61,7 +61,7 @@ $text: #C7C7C7;
         
         .recent {
             #info {
-                display: flex;
+                display: none; // display: flex;
                 flex-direction: row;
                 justify-content: space-between;
 
@@ -100,6 +100,7 @@ $text: #C7C7C7;
                             margin: 0;
 
                             &#time {
+                                display: none; // remove when time gathering is added
                                 font-size: 1rem;
                                 font-weight: 400;
                             }
