@@ -7,7 +7,7 @@ export const authStore = writable(pb.authStore)
 export const register = async ({email, password, username}: {email: string, password: string, username: string}) => {
     // create user
     const model = {
-        username: username,
+        username: username.toLowerCase(),
         email: email,
         emailVisibility: true,
         password: password,
@@ -55,8 +55,20 @@ export const updateSettings = async (
     await pb.collection("users").update(pb.authStore.model?.id!, data)
 }
 
-export const getUser = async (id: string) => {
-    let data = await pb.collection("users").getOne(id)
+export const getUser = async (tag: string) => {
+    let data = await pb.collection("users").getList(1, 1, {
+        filter: `username = "${tag}"`
+    })
 
-    return data
+    return data.items[0]
+}
+
+export const queryUser = async (user: string) => {
+    let data = await pb.collection("users").getFullList({
+        filter: `username ~ "${user.toLowerCase()}"`
+    })
+
+    console.log(data)
+    
+    return data;
 }
