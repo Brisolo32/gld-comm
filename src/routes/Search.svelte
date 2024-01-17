@@ -1,6 +1,6 @@
 <script lang="ts">
     import "../css/Search.scss";
-    import { SearchOutline, SparklesOutline } from "svelte-ionicons";
+    import { SearchOutline } from "svelte-ionicons";
     import { queryUser, pb } from "../scripts/Pocketbase";
     import { writable } from "svelte/store";
 
@@ -20,7 +20,7 @@
 
     {#if $users.length > 0}
         {#each $users as user}
-            <a class="user-wrap" href={`/u/${user.id}`}>
+            <a class="user-wrap" href={`/u/${user.username}`}>
                 <div class="user">
                     <img src="{
                         pb.files.getUrl(
