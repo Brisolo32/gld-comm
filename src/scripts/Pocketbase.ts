@@ -29,6 +29,8 @@ export const register = async ({email, password, username}: {email: string, pass
     // login
     await pb.collection("users").authWithPassword(email, password)
 
+    location.href = "/search"
+
     authStore.set(pb.authStore)
 }
 
@@ -43,10 +45,7 @@ export const login = async ({email, password}: {email: string, password: string}
     await pb.collection("users").authWithPassword(email, password)
     authStore.set(pb.authStore)
 
-    let agent = navigator.userAgent
-    if (agent.includes("ProjectGLD")) {
-        location.href = "/"
-    }
+    location.href = "/search"
 }
 
 /**
