@@ -38,7 +38,11 @@ $text: #C7C7C7;
                         font-family: "Titillium Web";
 
                         padding-left: 20px;
-                        margin: 5px 0 0 0;
+                        margin: 0 0 0 0;
+
+                        &#online {
+                            color: rgb(82, 208, 82);
+                        }
 
                         &#desc {
                             font-size: 1rem;

@@ -3,7 +3,7 @@
     import { getUser, pb, authStore, followUser, unfollowUser } from "../scripts/Pocketbase";
     import { getGames } from "../scripts/SGDB";
     import { writable } from "svelte/store";
-    import { onMount } from "svelte";
+    import { onMount, onDestroy } from "svelte";
     import { convertIsoDate, convertDurationToHours } from "../scripts/DateConv"
     export let user: string | undefined = undefined;
 
@@ -15,17 +15,32 @@
         pb.collection("users").authRefresh()
     })
 
+    onDestroy(() => {
+        pb.collection("users").unsubscribe("*")
+    })
+
     let games: any = writable([]);
     let avatar = writable("");
     let playedTime = writable(0);
+    let status: any = writable({});
 
     // @ts-ignore
-    let data: any = getUser(user).then((u) => {
-        let grid = getGames(u.games.map((game: { name: any; }) => game.name)).then((g) => {
+    let data: any = getUser(user).then((user) => {
+        let grid = getGames(user.games.map((game: { name: any; }) => game.name)).then((g) => {
             games.set(g);
         });
 
-        const url = pb.files.getUrl(Object.assign({}, u), u.avatar, {
+        status.set(user);
+
+        pb.collection("users").subscribe(user.id, (e) => {
+            if (e.action === "update") {
+                pb.collection("users").getOne(user.id).then((u) => {
+                    status.set(u);
+                })
+            }
+        })
+
+        const url = pb.files.getUrl(Object.assign({}, user), user.avatar, {
             thumb: "100x100",
         });
 
@@ -34,8 +49,8 @@
         // go through every game.playedTime and sum it up, playedTime is stored as Nd Nh Nm Ns, use Reduce
         let resTime: number[] = [];
 
-        u.games.forEach((game: { playedTime: any; }) => {
-            let time = convertDurationToHours(game.playedTime);
+        user.games.forEach((game: { playedTime: any; }) => {
+            let time = convertDurationToHours(game.playedTime || "0d 0h 0m 0s");
             
             if (time === undefined) return;
             resTime.push(time)
@@ -44,8 +59,12 @@
 
         playedTime.set(resTime.reduce((a: number, b: number) => a + b, 0));
 
-        return u;
+        return user;
     });
+
+    const isEmpty = (string: string) => {
+        return string === undefined || string.length === 0 || !string.trim();
+    }
 </script>
 
 <div id="flex">
@@ -57,11 +76,20 @@
                         <img src="{$avatar || "https://via.placeholder.com/200x200"}" alt="">
 
                         <span id=info>
-                        <p>{user.displayName}</p>
-                        
+                        {#if $status.is_online }
+                            <p id="online">{user.displayName}</p>
+                        {:else}
+                            <p>{user.displayName}</p>
+                        {/if}
+
                         <p id="desc">
                             {user.description}
                         </p>
+
+                        <p id="desc">{
+                            isEmpty($status.currently_playing) ? "Not playing anything" :
+                            "Playing " + $status.currently_playing
+                        }</p>
                         </span>
                    
                         {#if $authStore.isValid && 
@@ -81,7 +109,7 @@
             
                 <div class="recent">
                     <span id="info">
-                        <p>Recently played games</p>
+                        <p>{user.games.length} games in library</p>
                         <!-- loop through all games and get the total time played -->
                         <p id="time">{$playedTime} hours played in total</p>
                     </span>
@@ -92,7 +120,7 @@
                             
                                 <span id="info">
                                     <p>{game.name}</p>
-                                    <p id="time">Time played: {convertDurationToHours(game.playedTime) + " hour(s)"} played</p>
+                                    <p id="time">Time played: {convertDurationToHours(game.playedTime || "") + " hour(s)"} played</p>
                                     <p id="time">Last played: {convertIsoDate(game.LastPlayed) || "Never"}</p> 
                                 </span>
                             </div>

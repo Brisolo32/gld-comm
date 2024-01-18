@@ -1,5 +1,5 @@
 export const convertIsoDate = (isoDate: string) => {
-    if (isoDate === "") {
+    if (isoDate === "" || isoDate === undefined) {
         return undefined;
     }
 
