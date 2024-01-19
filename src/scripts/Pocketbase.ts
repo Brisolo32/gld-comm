@@ -57,7 +57,12 @@ export const login = async ({email, password}: {email: string, password: string}
 export const logout = async () => {
     pb.authStore.clear()
     authStore.set(pb.authStore)
-    location.href = "/"
+    
+    if (navigator.userAgent.includes("ProjectGLD")) {
+        location.href = "/fromlogout"
+    } else {
+        location.href = "/"
+    }
 }
 
 /**

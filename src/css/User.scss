@@ -85,49 +85,130 @@ $text: #C7C7C7;
             }
         }   
         
-        .recent {
-            #info {
-                display: flex;
-                flex-direction: row;
-                justify-content: space-between;
+        .bottom {
+            display: flex;
+            flex-direction: row;
+
+            .followers {
+                padding: 10px;
+                flex-grow: 0.2;
+                margin: 10px 0 10px 10px;                
 
                 background-color: $fg;
                 border-radius: 10px;
-                margin-top: 10px;
-                padding: 0 20px;
-            }   
 
-            #games {
-                #game {
+                > span {
+                    font-size: 1.2rem;
+                    font-weight: 800;
+
+                    &#small-n {
+                        font-size: 1rem;
+                    }
+                }
+
+                a {
                     display: flex;
                     flex-direction: row;
+                    
+                    margin-top: 10px;
 
-                    background-color: $fg;
-                    border-radius: 10px;
-
-                    margin: 10px 0;
-                    padding: 10px;
+                    color: $text;
+                    text-decoration: none;
 
                     img {
-                        width: 250px;
-                        border-radius: 5px;
+                        width: 60px;
+                        height: 60px;
+
+                        border-radius: 10px;
                     }
 
                     #info {
+                        padding-left: 10px;
                         display: flex;
                         flex-direction: column;
-                        height: 50px;
 
                         p {
-                            font-size: 1.5rem;
-                            font-weight: 800;
-                            font-family: "Titillium Web";
-
                             margin: 0;
+                            font-weight: 700;
+                            font-size: 1;
 
-                            &#time {
-                                font-size: 1rem;
+                            &#online {
+                                color: rgb(82, 208, 82);
+                            }
+
+                            &#tag {
                                 font-weight: 400;
+                                font-size: 1rem;
+                                color: darken($text, 20%);
+                            }
+                        }
+                    }
+                }
+            }
+
+            .recent {
+                flex-grow: 1;
+                
+                #info {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+
+                    background-color: $fg;
+                    border-radius: 10px;
+                    margin-top: 10px;
+                    padding: 0 20px;
+
+                    p#small-n,
+                    p.small {
+                        font-size: 13px;
+                    }
+                }   
+
+                #games {
+                    #game {
+                        display: flex;
+                        flex-direction: row;
+
+                        background-color: $fg;
+                        border-radius: 10px;
+
+                        margin: 10px 0;
+                        padding: 10px;
+
+                        img {
+                            width: 250px;
+                            border-radius: 5px;
+
+                            &#small {
+                                width: 150px;
+                            }
+                        }
+
+                        #info {
+                            display: flex;
+                            flex-direction: column;
+                            height: 50px;
+
+                            p {
+                                font-size: 1.5rem;
+                                font-weight: 800;
+                                font-family: "Titillium Web";
+
+                                margin: 0;
+                                
+                                &.small {
+                                    font-size: 0.6rem !important;
+                                }
+                                
+                                &#time {
+                                    font-size: 1rem;
+                                    font-weight: 400;
+                                }
+
+                                &#small-n {
+                                    font-size: 1rem;
+                                }
                             }
                         }
                     }

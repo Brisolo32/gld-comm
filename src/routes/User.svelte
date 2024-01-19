@@ -23,9 +23,10 @@
     let avatar = writable("");
     let playedTime = writable(0);
     let status: any = writable({});
+    let followers: any = writable([]);
 
     // @ts-ignore
-    let data: any = getUser(user).then((user) => {
+    let data: any = getUser(user).then(async (user) => {
         // if the user doesn't have private games enabled, get the grids
         if (!user.private_games) {
             getGames(user.games.map((game: { name: any; }) => game.name)).then((g) => {
@@ -33,7 +34,7 @@
             });
         } else {
             games.set([ "" ]);
-        } 
+        }
 
         // set current status
         status.set(user);
@@ -47,6 +48,13 @@
                 })
             }
         })
+
+        // query for the followers using following.username ?= user.username
+        let followerList = await pb.collection("users").getFullList({
+            filter: `following.username ?= "${user.username}"`,
+        })
+
+        followers.set(followerList)
 
         // set avatar
         const url = pb.files.getUrl(Object.assign({}, user), user.avatar, {
@@ -119,28 +127,75 @@
                     </div>
                 </div>
                 
+                <div class="bottom">
                 {#if !user.private_games}
                     <div class="recent">
                         <span id="info">
-                            <p>{user.games.length} games in library</p>
-                            <!-- loop through all games and get the total time played -->
-                            <p id="time">{$playedTime} hours played in total</p>
+                            {#if navigator.userAgent.includes("ProjectGLD")}
+                                <p id="small-n">{user.games.length} games in library</p>
+                                <p id="time" class="small">{$playedTime} hours played in total</p>
+                            {:else}
+                                <p>{user.games.length} games in library</p>
+                                <!-- loop through all games and get the total time played -->
+                                <p id="time">{$playedTime} hours played in total</p>
+                            {/if}
                         </span>
                         <div id="games">
                             {#each user.games as game, i}
                                 <div id="game">
-                                    <img src="{$games[i] || "https://via.placeholder.com/920x430"}" alt="game">
-                                
+                                    {#if navigator.userAgent.includes("ProjectGLD")}
+                                        <img id="small" src="{$games[i] || "https://via.placeholder.com/920x430"}" alt="game">
+                                    {:else}
+                                        <img src="{$games[i] || "https://via.placeholder.com/920x430"}" alt="game">
+                                    {/if}
+
                                     <span id="info">
-                                        <p>{game.name}</p>
-                                        <p id="time">Time played: {convertDurationToHours(game.playedTime || "") + " hour(s)"} played</p>
-                                        <p id="time">Last played: {convertIsoDate(game.LastPlayed) || "Never"}</p> 
+                                        {#if navigator.userAgent.includes("ProjectGLD")}
+                                            <p id="small-n">{game.name}</p>
+                                        {:else}
+                                            <p>{game.name}</p>
+                                            <p id="time">Time played: {convertDurationToHours(game.playedTime || "") + " hour(s)"} played</p>
+                                            <p id="time">Last played: {convertIsoDate(game.LastPlayed) || "Never"}</p> 
+                                        {/if}
                                     </span>
                                 </div>
                             {/each}
                         </div>
                     </div>
                 {/if}
+
+                <div class="followers">
+                    {#if navigator.userAgent.includes("ProjectGLD")}
+                        <span id="small-n">{$followers.length} followers</span>
+                    {:else}
+                        <span>{user.displayName}'s followers</span>
+                    {/if}
+
+                    {#if $followers.length > 0}
+                        {#each $followers as follower}
+                            <a href={"/u/" + follower.username } class="follower">
+                                <img src="{
+                                    pb.files.getUrl(Object.assign({}, follower), follower.avatar, {
+                                        thumb: "100x100",
+                                    })
+                                }" alt="{follower.displayName}">
+
+                                <span id="info">
+                                    {#if follower.is_online}
+                                        <p id="online">{follower.displayName}</p>
+                                    {:else}
+                                        <p>{follower.displayName}</p>
+                                    {/if}
+
+                                    <p id="tag">/u/{follower.username}</p>
+                                </span>
+                            </a>
+                        {/each}
+                    {:else}
+                        <p>No followers :(</p>
+                    {/if}
+                </div>
+                </div>
             </div>
         {/await}
     {:else}
