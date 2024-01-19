@@ -19,7 +19,7 @@
     let pfpPreview = url || "https://via.placeholder.com/200x200";
 
     let settings = {
-        username: $authStore.model?.username,
+        username: $authStore.model?.displayName,
         email: $authStore.model?.email,
         desc: $authStore.model?.description || "",
         pfp: $authStore.model?.avatar,
