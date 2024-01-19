@@ -93,7 +93,7 @@
                         <img src="{$avatar || "https://via.placeholder.com/200x200"}" alt="">
 
                         <span id=info>
-                        {#if $status.is_online }
+                        {#if $status.is_online && !$status.hide_playing }
                             <p id="online">{user.displayName}</p>
                         {:else}
                             <p>{user.displayName}</p>
@@ -103,7 +103,7 @@
                             {user.description}
                         </p>
 
-                        {#if !user.private_games}
+                        {#if !user.private_games && !$status.hide_playing}
                             <p id="desc">{
                                 isEmpty($status.currently_playing) ? "Not playing anything" :
                                 "Playing " + $status.currently_playing

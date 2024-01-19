@@ -23,7 +23,9 @@
         email: $authStore.model?.email,
         desc: $authStore.model?.description || "",
         pfp: $authStore.model?.avatar,
-        privateGames: $authStore.model?.private_games
+        privateGames: $authStore.model?.private_games,
+        hideOnline: $authStore.model?.hide_online,
+        hidePlaying: $authStore.model?.hide_playing
     }
 
     $: if (files) {
@@ -43,9 +45,17 @@
             <input accept="image/*" type="file" name="pfp" id="file-input" bind:files>
 
             <div class="toggles">
-                <label for="private">
-                    <input type="checkbox" id="private" bind:checked={settings.privateGames}>
+                <label for="hide-games">
+                    <input type="checkbox" id="hide-games" bind:checked={settings.privateGames}>
                     Hide games
+                </label>
+                <label for="hide-online">
+                    <input type="checkbox" id="hide-online" bind:checked={settings.hideOnline}>
+                    Hide status
+                </label>
+                <label for="hide-playing">
+                    <input type="checkbox" id="hide-playing" bind:checked={settings.hidePlaying}>
+                    Hide currently playing
                 </label>
             </div>
         </div>

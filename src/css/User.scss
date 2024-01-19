@@ -92,7 +92,7 @@ $text: #C7C7C7;
             .followers {
                 padding: 10px;
                 flex-grow: 0.2;
-                margin: 10px 0 10px 10px;                
+                margin: 10px 0 10px 0;                
 
                 background-color: $fg;
                 border-radius: 10px;
@@ -147,6 +147,7 @@ $text: #C7C7C7;
             }
 
             .recent {
+                padding-right: 10px;
                 flex-grow: 1;
                 
                 #info {
@@ -166,6 +167,7 @@ $text: #C7C7C7;
                 }   
 
                 #games {
+
                     #game {
                         display: flex;
                         flex-direction: row;
