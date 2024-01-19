@@ -17,7 +17,7 @@ nav {
     align-items: center;
 
     border-radius: 10px;
-    padding: 0 50px;
+    padding: 0 25px;
     background-color: $fg;
 
     height: 60px;
@@ -28,7 +28,7 @@ nav {
         #search-icon,
         #settings-icon { 
             transition: all 0.2s ease-in-out;
-            padding: 15px;
+            padding: 15px 10px;
 
             &:hover {
                 cursor: pointer;

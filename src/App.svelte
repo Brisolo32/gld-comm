@@ -15,15 +15,15 @@
     </Link>
 
     <div class="right">
+      <Link to="/search">
+        <SearchOutline id="search-icon" size="32" />
+      </Link>
+
       {#if $authStore.isValid}
         <Link to="/settings">
           <SettingsOutline id="settings-icon" size="32" />        
         </Link>
       {/if}
-
-      <Link to="/search">
-        <SearchOutline id="search-icon" size="32" />
-      </Link>
     </div>
   </nav>
   <div>

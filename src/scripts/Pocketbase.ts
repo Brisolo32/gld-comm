@@ -71,16 +71,16 @@ export const logout = async () => {
  * @return {Promise<void>} - A promise that resolves when the settings are updated.
  */
 export const updateSettings = async (
-    {username, email, desc, pfp}: 
-    {username: string, email: string, desc: string, pfp: string}
+    {username, email, desc, pfp, privateGames}: 
+    {username: string, email: string, desc: string, pfp: string, privateGames: boolean}
 ) => {
     const data = {
-        username: pb.authStore.model?.username,
         email: email,
         emailVisibility: true,
         displayName: username,
         description: desc,
-        avatar: pfp
+        avatar: pfp,
+        private_games: privateGames
     }
 
     await pb.collection("users").update(pb.authStore.model?.id!, data)

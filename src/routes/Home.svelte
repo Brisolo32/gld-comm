@@ -24,7 +24,7 @@
     <div class="login">
         <span>Login</span>
         <input bind:value={loginObj.email} type="text" placeholder="Email">
-        <input bind:value={loginObj.password} type="text" placeholder="Password">
+        <input bind:value={loginObj.password} type="password" placeholder="Password">
         <button on:click={() => login(loginObj).then(() => loginObj = {email: "", password: ""})} >Login</button>
     </div>
    
@@ -32,7 +32,7 @@
         <span>or Register</span>
         <input bind:value={registerObj.username} type="text" placeholder="Username">
         <input bind:value={registerObj.email} type="text" placeholder="Email">
-        <input bind:value={registerObj.password} type="text" placeholder="Password">
+        <input bind:value={registerObj.password} type="password" placeholder="Password">
         <button on:click={() => register(registerObj).then(() => registerObj = {email: "", password: "", username: ""})}>Register</button>
     </div>
 </div>

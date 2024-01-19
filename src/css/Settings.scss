@@ -28,33 +28,44 @@ $text: #C7C7C7;
             height: 100px;
 
             border-radius: 10px;
+
+            cursor: pointer;
         }
 
         input[type="file"] {
             display: none;
         }
 
-        label[for="file-input"] {
-            margin: 25px 0 25px 20px;
-        
+        .toggles {
+            background-color: darken($fg, 2%);
+            flex-grow: 1;
+
+            height: 80px;
+
+            margin: 0 0 0 20px;
+            padding: 10px;
+
             border-radius: 10px;
-            border: none;
 
-            background-color: lighten($fg, 5%);
-            color: $text;
+            input[type="checkbox"] {
+                appearance: none;
+                position: relative;
 
-            padding: 12px 10px 10px 10px;
-            font-size: 0.9rem;
+                top: 8px;
 
-            cursor: pointer;
-
-            transition: all 0.2s ease-in-out;
-
-            &:hover,
-            &:active,
-            &:focus {
+                border-radius: 10px;
                 cursor: pointer;
-                background-color: darken($fg, 5%);
+
+                margin-left: 10px; 
+                width: 20px;
+                height: 20px;
+
+                background-color: lighten($fg, 10%);
+                transition: all 0.2s ease-in-out;
+
+                &:checked {
+                    background-color: lighten($fg, 60%);
+                }
             }
         }
     }
@@ -104,8 +115,7 @@ $text: #C7C7C7;
             transition: all 0.2s ease-in-out;
 
             &:hover,
-            &:active,
-            &:focus {
+            &:active {
                 cursor: pointer;
                 background-color: darken($fg, 5%);
             }

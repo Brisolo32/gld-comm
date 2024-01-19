@@ -22,7 +22,8 @@
         username: $authStore.model?.username,
         email: $authStore.model?.email,
         desc: $authStore.model?.description || "",
-        pfp: $authStore.model?.avatar
+        pfp: $authStore.model?.avatar,
+        privateGames: $authStore.model?.private_games
     }
 
     $: if (files) {
@@ -36,9 +37,17 @@
         <h1>Settings</h1>
 
         <div id="pfp">
-            <img src="{pfpPreview}" alt="profile">
-            <label for="file-input">Select a profile picture</label>
+            <label for="file-input">
+                <img src="{pfpPreview}" alt="profile">
+            </label>
             <input accept="image/*" type="file" name="pfp" id="file-input" bind:files>
+
+            <div class="toggles">
+                <label for="private">
+                    <input type="checkbox" id="private" bind:checked={settings.privateGames}>
+                    Hide games
+                </label>
+            </div>
         </div>
 
         <div id="inputs">

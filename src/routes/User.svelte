@@ -26,20 +26,29 @@
 
     // @ts-ignore
     let data: any = getUser(user).then((user) => {
-        let grid = getGames(user.games.map((game: { name: any; }) => game.name)).then((g) => {
-            games.set(g);
-        });
+        // if the user doesn't have private games enabled, get the grids
+        if (!user.private_games) {
+            getGames(user.games.map((game: { name: any; }) => game.name)).then((g) => {
+                games.set(g);
+            });
+        } else {
+            games.set([ "" ]);
+        } 
 
+        // set current status
         status.set(user);
 
-        pb.collection("users").subscribe(user.id, (e) => {
-            if (e.action === "update") {
+        // subscribe to the user table
+        pb.collection("users").subscribe(user.id, (event) => {
+            // if it updates then update the status
+            if (event.action === "update") {
                 pb.collection("users").getOne(user.id).then((u) => {
                     status.set(u);
                 })
             }
         })
 
+        // set avatar
         const url = pb.files.getUrl(Object.assign({}, user), user.avatar, {
             thumb: "100x100",
         });
@@ -56,9 +65,9 @@
             resTime.push(time)
         });
 
-
         playedTime.set(resTime.reduce((a: number, b: number) => a + b, 0));
 
+        // return the user
         return user;
     });
 
@@ -86,10 +95,12 @@
                             {user.description}
                         </p>
 
-                        <p id="desc">{
-                            isEmpty($status.currently_playing) ? "Not playing anything" :
-                            "Playing " + $status.currently_playing
-                        }</p>
+                        {#if !user.private_games}
+                            <p id="desc">{
+                                isEmpty($status.currently_playing) ? "Not playing anything" :
+                                "Playing " + $status.currently_playing
+                            }</p>
+                        {/if}
                         </span>
                    
                         {#if $authStore.isValid && 
@@ -99,34 +110,37 @@
                                 Follow user
                             </button>
 
-                        {:else if $authStore.isValid }
+                        {:else if $authStore.isValid
+                             && $authStore.model?.id !== user.id}
                             <button on:click={() => unfollowUser(user.id)} id="follow">
                                 Unfollow user
                             </button>
                         {/if}
                     </div>
                 </div>
-            
-                <div class="recent">
-                    <span id="info">
-                        <p>{user.games.length} games in library</p>
-                        <!-- loop through all games and get the total time played -->
-                        <p id="time">{$playedTime} hours played in total</p>
-                    </span>
-                    <div id="games">
-                        {#each user.games as game, i}
-                            <div id="game">
-                                <img src="{$games[i] || "https://via.placeholder.com/920x430"}" alt="game">
-                            
-                                <span id="info">
-                                    <p>{game.name}</p>
-                                    <p id="time">Time played: {convertDurationToHours(game.playedTime || "") + " hour(s)"} played</p>
-                                    <p id="time">Last played: {convertIsoDate(game.LastPlayed) || "Never"}</p> 
-                                </span>
-                            </div>
-                        {/each}
+                
+                {#if !user.private_games}
+                    <div class="recent">
+                        <span id="info">
+                            <p>{user.games.length} games in library</p>
+                            <!-- loop through all games and get the total time played -->
+                            <p id="time">{$playedTime} hours played in total</p>
+                        </span>
+                        <div id="games">
+                            {#each user.games as game, i}
+                                <div id="game">
+                                    <img src="{$games[i] || "https://via.placeholder.com/920x430"}" alt="game">
+                                
+                                    <span id="info">
+                                        <p>{game.name}</p>
+                                        <p id="time">Time played: {convertDurationToHours(game.playedTime || "") + " hour(s)"} played</p>
+                                        <p id="time">Last played: {convertIsoDate(game.LastPlayed) || "Never"}</p> 
+                                    </span>
+                                </div>
+                            {/each}
+                        </div>
                     </div>
-                </div>
+                {/if}
             </div>
         {/await}
     {:else}
