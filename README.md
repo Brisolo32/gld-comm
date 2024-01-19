@@ -1,47 +1,59 @@
-# Svelte + TS + Vite
+# GLD-Comm Readme
 
-This template should help get you started developing with Svelte and TypeScript in Vite.
+## Overview
 
-## Recommended IDE Setup
+Welcome to GLD-Comm, a web application designed to track and manage information related to Project GLD, a game launcher. GLD-Comm provides a centralized platform for users to keep tabs on games, playtime, profile pictures (pfps), and settings associated with their Project GLD experience.
 
-[VS Code](https://code.visualstudio.com/) + [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode).
+## Pictures
+![User](./assets/User.png)
+![Search](./assets/Search.png)
+![Settings](./assets/Settings.png)
 
-## Need an official Svelte framework?
+## Features
 
-Check out [SvelteKit](https://github.com/sveltejs/kit#readme), which is also powered by Vite. Deploy anywhere with its serverless-first approach and adapt to various platforms, with out of the box support for TypeScript, SCSS, and Less, and easily-added support for mdsvex, GraphQL, PostCSS, Tailwind CSS, and more.
+- **Game Tracking:** Keep a record of the games you play through Project GLD, including playtime and other relevant details.
 
-## Technical considerations
+- **Profile Pictures (PFPs):** Manage and showcase your profile pictures associated with Project GLD.
 
-**Why use this over SvelteKit?**
+- **Settings:** Store and customize your Project GLD settings for a personalized gaming experience.
 
-- It brings its own routing solution which might not be preferable for some users.
-- It is first and foremost a framework that just happens to use Vite under the hood, not a Vite app.
+## Getting Started
 
-This template contains as little as possible to get started with Vite + TypeScript + Svelte, while taking into account the developer experience with regards to HMR and intellisense. It demonstrates capabilities on par with the other `create-vite` templates and is a good starting point for beginners dipping their toes into a Vite + Svelte project.
+Follow these steps to get started with GLD-Comm:
 
-Should you later need the extended capabilities and extensibility provided by SvelteKit, the template has been structured similarly to SvelteKit so that it is easy to migrate.
+1. **Clone the Repository:**
+   ```bash
+   git clone https://github.com/Brisolo32/gld-comm.git
+   ```
+2. Install Dependencies:
 
-**Why `global.d.ts` instead of `compilerOptions.types` inside `jsconfig.json` or `tsconfig.json`?**
+    ```bash
+    cd gld-comm
+    bun install # gld-comm uses bun but you can also use npm
+    ```
 
-Setting `compilerOptions.types` shuts out all other types not explicitly listed in the configuration. Using triple-slash references keeps the default TypeScript setting of accepting type information from the entire workspace, while also adding `svelte` and `vite/client` type information.
+3. Configuration:
 
-**Why include `.vscode/extensions.json`?**
+    Open the .env file and provide the required configurations, including the Pocketbase backend details.
 
-Other templates indirectly recommend extensions via the README, but this file allows VS Code to prompt the user to install the recommended extension upon opening the project.
+4. Run the Application:
 
-**Why enable `allowJs` in the TS template?**
+    ```bash
+    bun start
+    ```
 
-While `allowJs: false` would indeed prevent the use of `.js` files in the project, it does not prevent the use of JavaScript syntax in `.svelte` files. In addition, it would force `checkJs: false`, bringing the worst of both worlds: not being able to guarantee the entire codebase is TypeScript, and also having worse typechecking for the existing JavaScript. In addition, there are valid use cases in which a mixed codebase may be relevant.
+5. Access the Application:
+    Open your web browser and navigate to http://localhost:5173 to access GLD-Comm.
 
-**Why is HMR not preserving my local component state?**
+## Backend Integration
 
-HMR state preservation comes with a number of gotchas! It has been disabled by default in both `svelte-hmr` and `@sveltejs/vite-plugin-svelte` due to its often surprising behavior. You can read the details [here](https://github.com/rixo/svelte-hmr#svelte-hmr).
+GLD-Comm utilizes Pocketbase as the backend. Ensure that you have a instance running and configure the backend details in the `src/scripts/Pocketbase.ts` file.
 
-If you have state that's important to retain within a component, consider creating an external store which would not be replaced by HMR.
+## Contributing
 
-```ts
-// store.ts
-// An extremely simple external store
-import { writable } from 'svelte/store'
-export default writable(0)
-```
+I welcome contributions to enhance GLD-Comm. If you have ideas, bug reports, or want to contribute code, please open up a PR, I'd gladly accept it
+
+If you encounter any issues or have questions, please open an issue on the repo.
+
+---
+GLD-Comm is released under the [MIT License](https://mit-license.org/).
