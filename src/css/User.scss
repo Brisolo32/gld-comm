@@ -178,12 +178,18 @@ $text: #C7C7C7;
                         margin: 10px 0;
                         padding: 10px;
 
+                        &.small {
+                            height: 90px;
+                        }
+
                         img {
                             width: 250px;
+                            height: 117px;
                             border-radius: 5px;
 
                             &#small {
                                 width: 150px;
+                                height: 70px;
                             }
                         }
 
@@ -191,6 +197,11 @@ $text: #C7C7C7;
                             display: flex;
                             flex-direction: column;
                             height: 50px;
+
+                            &.small {
+                                position: relative;
+                                top: -10px;
+                            }
 
                             p {
                                 font-size: 1.5rem;
@@ -201,6 +212,7 @@ $text: #C7C7C7;
                                 
                                 &.small {
                                     font-size: 0.6rem !important;
+                                    font-weight: 800;
                                 }
                                 
                                 &#time {

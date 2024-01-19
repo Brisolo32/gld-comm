@@ -82,6 +82,7 @@
     const isEmpty = (string: string) => {
         return string === undefined || string.length === 0 || !string.trim();
     }
+
 </script>
 
 <div id="flex">
@@ -142,16 +143,22 @@
                         </span>
                         <div id="games">
                             {#each user.games as game, i}
-                                <div id="game">
+
+                                <!-- set height of #game based on height of #info -->
+                                <div id="game" class={navigator.userAgent.includes("ProjectGLD") ? "small" : ""}
+                                >
                                     {#if navigator.userAgent.includes("ProjectGLD")}
                                         <img id="small" src="{$games[i] || "https://via.placeholder.com/920x430"}" alt="game">
                                     {:else}
                                         <img src="{$games[i] || "https://via.placeholder.com/920x430"}" alt="game">
                                     {/if}
 
-                                    <span id="info">
+                                    <!-- set height of #game based on height of #info -->
+                                    <span id="info" class={navigator.userAgent.includes("ProjectGLD") ? "small" : ""} >
                                         {#if navigator.userAgent.includes("ProjectGLD")}
                                             <p id="small-n">{game.name}</p>
+                                            <p id="time" class="small">Time played: {convertDurationToHours(game.playedTime || "") + " hour(s)"} played</p>
+                                            <p id="time" class="small">Last played: {convertIsoDate(game.LastPlayed) || "Never"}</p> 
                                         {:else}
                                             <p>{game.name}</p>
                                             <p id="time">Time played: {convertDurationToHours(game.playedTime || "") + " hour(s)"} played</p>
