@@ -29,13 +29,6 @@ nav {
         #settings-icon { 
             transition: all 0.2s ease-in-out;
             padding: 15px 10px;
-
-            &:hover {
-                cursor: pointer;
-                transform:
-                    translateX(-10px);
-                
-            }
         }
 
         #logo {
@@ -49,6 +42,21 @@ nav {
                 transform: 
                     translateX(10px);            
             }
+        }
+
+        #avatar {
+            position: relative;
+            top: -11px;
+
+            width: 39px;
+            height: 39px;
+            padding-left: 10px;
+            
+            border-radius: 100%;
+
+            transition: all 0.2s ease-in-out;
+
+            cursor: pointer;
         }
     }
 }
